@@ -114,6 +114,6 @@ network-monitor -h
 network-monitor stats -h
 ```
 
-多网卡临时采集、指定数据库和 Linux 安装见 [完整使用说明](https://github.com/Verdient/network-monitor#readme)。
+多网卡临时采集、指定数据库和更多查询方式见 [完整使用说明](https://github.com/Verdient/network-monitor#readme)。
 问题与建议请提交到 [Issues](https://github.com/Verdient/network-monitor/issues)。
 本仓库使用 [0BSD 许可证](LICENSE)。
