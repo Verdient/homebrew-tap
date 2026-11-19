@@ -1,0 +1,37 @@
+name: Homebrew
+
+on:
+  push:
+    paths: ["Formula/**", ".github/workflows/test.yml"]
+  pull_request:
+    paths: ["Formula/**", ".github/workflows/test.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check whether a formula has been published
+        id: formula
+        run: |
+          if test -f Formula/network-monitor.rb; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install and test the checked-out formula
+        if: steps.formula.outputs.exists == 'true'
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+        run: |
+          brew tap-new local/network-monitor
+          cp Formula/network-monitor.rb "$(brew --repository local/network-monitor)/Formula/network-monitor.rb"
+          brew install local/network-monitor/network-monitor
+          brew test local/network-monitor/network-monitor
