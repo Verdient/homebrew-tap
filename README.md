@@ -7,9 +7,9 @@
 
 | 操作系统 | 下载 |
 | --- | --- |
-| macOS 14+ | [![下载 Apple Silicon（ARM64）版](https://img.shields.io/badge/tar.gz-Apple%20Silicon-000000.svg?logo=apple&logoColor=white)](https://github.com/Verdient/network-monitor/releases/download/v0.1.0/network-monitor-0.1.0-macos-arm64.tar.gz)<br>[![下载 Intel（x86_64）版](https://img.shields.io/badge/tar.gz-Intel%20x64-00A9E0.svg?logo=apple&logoColor=white)](https://github.com/Verdient/network-monitor/releases/download/v0.1.0/network-monitor-0.1.0-macos-x86_64.tar.gz) |
+| macOS 14+ | [![下载 Apple Silicon（ARM64）版](https://img.shields.io/badge/tar.gz-Apple%20Silicon-000000.svg?logo=apple&logoColor=white)](https://github.com/Verdient/network-monitor/releases/download/v0.3.0/network-monitor-0.3.0-macos-arm64.tar.gz)<br>[![下载 Intel（x86_64）版](https://img.shields.io/badge/tar.gz-Intel%20x64-00A9E0.svg?logo=apple&logoColor=white)](https://github.com/Verdient/network-monitor/releases/download/v0.3.0/network-monitor-0.3.0-macos-x86_64.tar.gz) |
 
-可使用同一版本的 [SHA256SUMS](https://github.com/Verdient/network-monitor/releases/download/v0.1.0/SHA256SUMS) 校验下载文件。
+可使用同一版本的 [SHA256SUMS](https://github.com/Verdient/network-monitor/releases/download/v0.3.0/SHA256SUMS) 校验下载文件。
 完整更新记录：[ChangeLog](https://github.com/Verdient/network-monitor/blob/main/CHANGELOG.md)。
 
 ## 安装并开始使用
@@ -22,11 +22,15 @@ network-monitor --version
 brew services start network-monitor
 ```
 
-启动后等待几秒，查看今天的网速统计：
+直接运行 `network-monitor` 打开实时仪表盘，按 `q` 退出。也可以指定近期范围和刷新间隔。
 
 ```bash
-network-monitor stats
+network-monitor --last 15m --interval 0.5
 ```
+
+按 `c` 查看本机 TCP 连接，按 `i` 查看各对端 IP 的速率与累计流量。IP 页使用 macOS 自带的 `tcpdump`，需要抓包权限。按 `+` 延长刷新间隔，按 `-` 缩短刷新间隔。
+
+运行 `network-monitor stats` 查看一次历史统计。
 
 默认每秒采集一次，使用默认路由网卡，按系统时区统计当天数据。
 

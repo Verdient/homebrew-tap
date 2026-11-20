@@ -1,24 +1,24 @@
 class NetworkMonitor < Formula
   desc "Monitor network interface traffic with daily SQLite partitions"
   homepage "https://github.com/Verdient/network-monitor"
-  version "0.1.0"
+  version "0.3.0"
   license "0BSD"
 
   depends_on macos: :sonoma
 
   on_macos do
     on_arm do
-      url "https://github.com/Verdient/network-monitor/releases/download/v0.1.0/network-monitor-0.1.0-macos-arm64.tar.gz"
-      sha256 "5d6d65491c6a3549869ef84a939ecb8288b9a70aa4b0728546199845eb1d890c"
+      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.0/network-monitor-0.3.0-macos-arm64.tar.gz"
+      sha256 "c9ef400a4806e93a2db491da72870954f2dd25f2ebfa3db86b2ee2ca3f6d85c9"
     end
     on_intel do
-      url "https://github.com/Verdient/network-monitor/releases/download/v0.1.0/network-monitor-0.1.0-macos-x86_64.tar.gz"
-      sha256 "6bbb4f331c60b90fec39c53062324b7f2b1c5e4438c1d2a0394e78e1f75a7e6d"
+      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.0/network-monitor-0.3.0-macos-x86_64.tar.gz"
+      sha256 "00dd63b1af8f1ac1378f7ddc88b4e708fa302d98ec4825560df82483d14da645"
     end
   end
 
   def install
-    libexec.install "network-monitor"
+    libexec.install "network-monitor", "network-monitor-runtime"
     (libexec/"homebrew-prefix").write "#{HOMEBREW_PREFIX}\n"
     bin.write_exec_script libexec/"network-monitor"
 
@@ -55,6 +55,7 @@ class NetworkMonitor < Formula
       Database: #{var}/lib/network-monitor/network-monitor.db
 
       Start collection with: brew services start network-monitor
+      Open the live dashboard with: network-monitor
       View today's statistics with: network-monitor stats
       Use brew services to manage this installation.
     EOS
