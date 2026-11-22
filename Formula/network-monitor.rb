@@ -1,19 +1,19 @@
 class NetworkMonitor < Formula
   desc "Monitor network interface traffic with daily SQLite partitions"
   homepage "https://github.com/Verdient/network-monitor"
-  version "0.3.2"
+  version "0.3.3"
   license "0BSD"
 
   depends_on macos: :sonoma
 
   on_macos do
     on_arm do
-      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.2/network-monitor-0.3.2-macos-arm64.tar.gz"
-      sha256 "4e569a1c3463eccf6923d7e94291fe309457d0f174f0bd9a9e5a79764ef1871d"
+      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.3/network-monitor-0.3.3-macos-arm64.tar.gz"
+      sha256 "8e13bcb82ead59930612db697590b19840292e961a5a5b2e8dfbc9684831197c"
     end
     on_intel do
-      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.2/network-monitor-0.3.2-macos-x86_64.tar.gz"
-      sha256 "b0e0496b1f16172837b1cd120d5349d7e0729771a8f5e9920c295405818187c3"
+      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.3/network-monitor-0.3.3-macos-x86_64.tar.gz"
+      sha256 "5a5aa282bd88567a5efb12af5c3e5e6553bc535b7e59d951f713f8203e0cfe0d"
     end
   end
 
@@ -21,6 +21,9 @@ class NetworkMonitor < Formula
     libexec.install "network-monitor", "network-monitor-runtime"
     (libexec/"homebrew-prefix").write "#{HOMEBREW_PREFIX}\n"
     bin.write_exec_script libexec/"network-monitor"
+    bash_completion.install "completions/network-monitor"
+    zsh_completion.install "completions/_network-monitor"
+    fish_completion.install "completions/network-monitor.fish"
 
     (buildpath/"config.ini").write <<~EOS
       # Long-running service settings. Edit and run: brew services restart network-monitor
@@ -62,7 +65,12 @@ class NetworkMonitor < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/network-monitor --version")
+    assert_match version.to_s, shell_output("#{bin}/network-monitor -v")
+    { "bash" => bash_completion/"network-monitor",
+      "zsh" => zsh_completion/"_network-monitor",
+      "fish" => fish_completion/"network-monitor.fish" }.each do |shell, script|
+      assert_equal shell_output("#{bin}/network-monitor completion #{shell}"), script.read
+    end
     assert_match "SQLite", shell_output("#{bin}/network-monitor monitor --help")
     system bin/"network-monitor", "monitor", "--interface", "lo0",
            "--database", testpath/"samples.db", "--count", "1"
