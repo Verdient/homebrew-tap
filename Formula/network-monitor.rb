@@ -1,19 +1,19 @@
 class NetworkMonitor < Formula
   desc "Monitor network interface traffic with daily SQLite partitions"
   homepage "https://github.com/Verdient/network-monitor"
-  version "0.3.3"
+  version "0.3.4"
   license "0BSD"
 
   depends_on macos: :sonoma
 
   on_macos do
     on_arm do
-      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.3/network-monitor-0.3.3-macos-arm64.tar.gz"
-      sha256 "8e13bcb82ead59930612db697590b19840292e961a5a5b2e8dfbc9684831197c"
+      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.4/network-monitor-0.3.4-macos-arm64.tar.gz"
+      sha256 "264e4c9120cab190353c218d66ddec803343dbeb941aff25018da910e63a6dfa"
     end
     on_intel do
-      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.3/network-monitor-0.3.3-macos-x86_64.tar.gz"
-      sha256 "5a5aa282bd88567a5efb12af5c3e5e6553bc535b7e59d951f713f8203e0cfe0d"
+      url "https://github.com/Verdient/network-monitor/releases/download/v0.3.4/network-monitor-0.3.4-macos-x86_64.tar.gz"
+      sha256 "acb5ac44a805488b6b36f5b442c615d0643d6b85fb5abd7fb0b08e71f2fab049"
     end
   end
 
